@@ -1,11 +1,11 @@
-Docker debian-xymon
+Docker debian-ntp
 ============
 
 Configuration Docker with Debian Stable and package : ntp
 
 Quick Start
 ===========
-    docker run -d -p 123:123 --name xymon mnival/debian-ntp
+    docker run -d -p 123:123/udp --cap-add=SYS_TIME --cap-add=SYS_RESOURCE --name ntp mnival/debian-ntp
 
 Interfaces
 ===========
@@ -13,7 +13,7 @@ Interfaces
 Ports
 -------
 
-* 123 -- NTP
+* 123(udp) -- NTP
 
 Volumes
 -------
