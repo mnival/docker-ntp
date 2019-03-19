@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+my ($_fh);
+my $_file_conf = ('/etc/ntp.conf');
+my @_directory = ('/var/log/ntpstats', '/var/lib/ntp');
+
+die if system ("usermod ntp -u $ENV{'ntp.uid'}") != 0;
+die if system ("groupmod ntp -g $ENV{'ntp.gid'}") != 0;
+chown ($ENV{'ntp.uid'}, $ENV{'ntp.gid'}, @_directory);
+
+open($_fh, '>', $_file_conf);
+foreach (sort keys %ENV) {
+	my $_key=$_;
+	if ( $_ =~ m/ntpconf\.(.*)/ ) {
+		foreach (split (/;/, $ENV{$_key})) {
+			printf $_fh ("%s %s\n", $1, $_);
+		}
+	}
+}
+
+if ( $ENV{'ntp.args'} =~ m/\$|;/ ) {
+	printf ("Value prohibited in ntp.args variable\n");
+} else {
+	exec ("exec ntpd -n -u $ENV{'ntp.uid'}:$ENV{'ntp.gid'} $ENV{'ntp.args'}");
+}
