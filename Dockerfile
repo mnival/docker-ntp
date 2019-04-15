@@ -3,7 +3,7 @@ FROM debian:stable-slim
 LABEL maintainer="Michael Nival <docker@mn-home.fr>" \
 	name="debian-ntp" \
 	description="Debian Stable with the package ntp" \
-	docker.cmd="command"
+	docker.cmd="docker run -d -p 123:123/udp --cap-add=SYS_TIME --cap-add=SYS_RESOURCE --name ntp mnival/debian-ntp"
 
 RUN printf "deb http://ftp.debian.org/debian/ stable main\ndeb http://ftp.debian.org/debian/ stable-updates main\ndeb http://security.debian.org/ stable/updates main\n" >> /etc/apt/sources.list.d/stable.list && \
 	cat /dev/null > /etc/apt/sources.list && \
