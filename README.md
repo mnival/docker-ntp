@@ -24,4 +24,4 @@ Maintainer
 ==========
 
 Please submit all issues/suggestions/bugs via
-https://github.com/mnival/doker-ntp
+https://github.com/mnival/docker-ntp
